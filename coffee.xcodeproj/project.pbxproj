@@ -32,12 +32,6 @@
 		718C24A81C4E823400447254 /* MenuListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C24A71C4E823400447254 /* MenuListViewController.swift */; };
 		718F96421C527D5A003B80AC /* AnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718F96411C527D5A003B80AC /* AnimationDelegate.swift */; };
 		718F96441C547C91003B80AC /* CityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718F96431C547C91003B80AC /* CityCell.swift */; };
-		71E5BA1A1C560997002170C2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E5BA191C560997002170C2 /* StoreKit.framework */; };
-		71E5BA1C1C56099C002170C2 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E5BA1B1C56099C002170C2 /* PassKit.framework */; };
-		71E5BA1E1C5609A1002170C2 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E5BA1D1C5609A1002170C2 /* EventKit.framework */; };
-		71E5BA201C5609A8002170C2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E5BA1F1C5609A8002170C2 /* libsqlite3.tbd */; };
-		71E5BA221C5609AD002170C2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E5BA211C5609AD002170C2 /* libz.tbd */; };
-		71E5BA241C5609B6002170C2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E5BA231C5609B6002170C2 /* Social.framework */; };
 		71E5BA261C560D82002170C2 /* AppDelegate+Splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E5BA251C560D82002170C2 /* AppDelegate+Splash.swift */; };
 		71EF3E9E1C4BBDF0002714CA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71EF3E9D1C4BBDF0002714CA /* MapKit.framework */; };
 		A7D3B81EEB0588F4EBB8B84A /* Pods_coffee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B08653E920FD179D0D0370 /* Pods_coffee.framework */; };
@@ -113,12 +107,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71E5BA241C5609B6002170C2 /* Social.framework in Frameworks */,
-				71E5BA221C5609AD002170C2 /* libz.tbd in Frameworks */,
-				71E5BA201C5609A8002170C2 /* libsqlite3.tbd in Frameworks */,
-				71E5BA1E1C5609A1002170C2 /* EventKit.framework in Frameworks */,
-				71E5BA1C1C56099C002170C2 /* PassKit.framework in Frameworks */,
-				71E5BA1A1C560997002170C2 /* StoreKit.framework in Frameworks */,
 				71EF3E9E1C4BBDF0002714CA /* MapKit.framework in Frameworks */,
 				A7D3B81EEB0588F4EBB8B84A /* Pods_coffee.framework in Frameworks */,
 			);

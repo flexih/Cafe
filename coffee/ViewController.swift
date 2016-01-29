@@ -10,7 +10,6 @@ import UIKit
 import MapKit
 import Static
 import SafariServices
-import GoogleMobileAds
 
 class ViewController: UIViewController {
 
@@ -22,14 +21,6 @@ class ViewController: UIViewController {
         view.rowHeight = 85
         view.backgroundColor = UIColor.clearColor()
         return view
-    }()
-    
-    lazy var bannerView: GADBannerView = {
-        let v = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
-        v.delegate = self
-        v.adUnitID = "ca-app-pub-4396150446847703/1899901748"
-        v.rootViewController = self
-        return v
     }()
 
     var didUpdateUserLocation = false
@@ -104,8 +95,6 @@ class ViewController: UIViewController {
 
         loadCafesData()
         fetchCafeData()
-        
-        loadAD()
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -185,25 +174,5 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController: GADBannerViewDelegate {
-    
-    func loadAD() {
-        if (UIApplication.sharedApplication().delegate as! AppDelegate).showAD {
-            let ADRequest = GADRequest()
-            #if arch(x86_64)
-            ADRequest.testDevices = [kGADSimulatorID];
-            #endif
-            bannerView.loadRequest(ADRequest)
-        }
-    }
-    
-    func adViewDidReceiveAd(bannerView: GADBannerView!) {
-        view.addSubview(bannerView)
-        bannerView.snp_makeConstraints { make in
-            make.centerX.equalTo(view)
-            make.bottom.equalTo(view)
-        }
-    }
-}
 
 

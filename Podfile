@@ -8,5 +8,4 @@ target 'coffee' do
   pod 'AsyncSwift'
   pod 'Reveal-iOS-SDK', :configurations => ['Debug']
   pod 'Static', git: 'https://github.com/flexih/Static.git'
-  pod 'Google-Mobile-Ads-SDK'
 end
