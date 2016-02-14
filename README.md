@@ -2,7 +2,7 @@
 
 Cafe App in Swift
 
-[App Store](https://itunes.apple.com/cn/app/pnf/id1048365277?l=en&mt=12)
+[App Store](https://itunes.apple.com/app/diao-ke-shi-guang/id440983941)
 
 Snapshot
 ===
