@@ -45,8 +45,6 @@ class CafeSubtitleCell: UITableViewCell, CellType {
         accessoryType = row.accessory.type
         accessoryView = row.accessory.view
         
-        imageView?.af_cancelImageRequest()
-        
         if let cafe = row.context?["cafe"] as? Cafe {
             imageView?.af_setImageWithURL(cafe.posterURL, placeholderImage: self.dynamicType.placeholderImage, filter: self.dynamicType.imageFilter, imageTransition: .CrossDissolve(0.25), runImageTransitionIfCached: true)
         }
