@@ -9,10 +9,10 @@
 import UIKit
 import Static
 
-class CityCell: UITableViewCell, CellType {
+class CityCell: UITableViewCell, Cell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .Default, reuseIdentifier: reuseIdentifier)
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
 //        textLabel?.font = UIFont.systemFontOfSize(12)
         textLabel?.textColor = UIColor(hex: 0xFB8472)

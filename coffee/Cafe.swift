@@ -12,7 +12,7 @@ import CoreLocation
 struct Cafe {
     let name: String
     let addr: String
-    let posterURL: NSURL
+    let posterURL: URL
     let oneword: String?
     let phones: [String]?
     let openingTime: String?
@@ -23,7 +23,7 @@ struct Cafe {
     init(dict: [String: AnyObject]) {
         name = dict["name"] as? String ?? ""
         addr = dict["addr"] as? String ?? ""
-        posterURL = (dict["poster"] as? String).map{NSURL(string: $0)!} ?? NSURL()
+        posterURL = (dict["poster"] as? String).map{URL(string: $0)!} ?? URL(string: "")!
         oneword = dict["oneword"] as? String
         phones = dict["phones"] as? [String]
         openingTime = dict["opening"] as? String

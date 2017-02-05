@@ -8,21 +8,21 @@
 
 import Static
 
-class CafeInfoCell: SubtitleCell {
+class CafeInfoCell: UITableViewCell, Cell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
-        textLabel?.font = UIFont.systemFontOfSize(12)
+        textLabel?.font = UIFont.systemFont(ofSize: 12)
         textLabel?.textColor = UIColor(hex: 0xFB8472)
         
-        detailTextLabel?.font = UIFont.systemFontOfSize(15)
+        detailTextLabel?.font = UIFont.systemFont(ofSize: 15)
         detailTextLabel?.textColor = UIColor(hex: 0x968F8B)
         detailTextLabel?.numberOfLines = 2
     }
 
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
 }

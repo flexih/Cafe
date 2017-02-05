@@ -14,14 +14,14 @@ import Async
 extension ViewController {
 
     var cafeURLString: String {
-        return "https://raw.githubusercontent.com/flexih/flexih.github.io/master/coffee/cafe.json"
+        return "https://raw.githubusercontent.com/flexih/flexih.github.io/master/coffee/cafes_2_3.json"
     }
     
     func loadCafesData() {
         
         var rows = [Row]()
         for cafe in cityList.cafes {
-            var row = Row(text: cafe.name, detailText: cafe.addr, image: nil, accessory: .DisclosureIndicator, cellClass: CafeSubtitleCell.self, context: ["cafe": cafe])
+            var row = Row(text: cafe.name, detailText: cafe.addr, image: nil, accessory: .disclosureIndicator, cellClass: CafeSubtitleCell.self, context: ["cafe": cafe])
             row.selection = { [weak self] indexPath in
                 if let strongSelf = self  {
                     if let c = row.context?["cafe"] as? Cafe {
@@ -40,25 +40,21 @@ extension ViewController {
     }
 
     func fetchCafeData() {
-//        Alamofire.request(.GET, cafeURLString, headers: ["Accept" : "application/json"]).responseJSON { [weak self] response in
-//
-//            guard response.result.isSuccess else {
-//                return
-//            }
-//
-////            if let JSON = response.result.value as? [[String: AnyObject]], strongSelf = self {
-////                for cityJson in JSON {
-////                    let city = City(dict: cityJson)
-////                    var ocity = strongSelf.cityList.cityWithName(city.name)
-////
-////
-////                }
-////            }
-//
-//            Async.utility {
-//                CityList.storeData(response.data)
-//            }
-//        }
+       SessionManager.default.request(cafeURLString, method: .get, headers: ["Accept" : "text/plain"]).responseJSON { [weak self] response in
+
+           guard response.result.isSuccess else {
+               return
+           }
+
+           if let data = response.data, let strongSelf = self {
+                strongSelf.cityList = CityList(jsonData: data)
+                strongSelf.loadCafesData()
+
+                Async.utility {
+                    CityList.storeData(response.data)
+                }
+           }
+       }
     }
     
 }

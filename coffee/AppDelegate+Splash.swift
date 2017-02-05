@@ -12,7 +12,7 @@ import Async
 
 extension AppDelegate {
 
-    private struct Keys {
+    fileprivate struct Keys {
         static var showADKey = "ad"
         static var shopURIKey = "shopURI"
     }
@@ -23,28 +23,28 @@ extension AppDelegate {
 
     var showAD: Bool {
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(Keys.showADKey)
+            return UserDefaults.standard.bool(forKey: Keys.showADKey)
         }
 
         set {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: Keys.showADKey)
+            UserDefaults.standard.set(newValue, forKey: Keys.showADKey)
         }
     }
 
     var shopURI: String? {
         get {
-            return NSUserDefaults.standardUserDefaults().stringForKey(Keys.shopURIKey)
+            return UserDefaults.standard.string(forKey: Keys.shopURIKey)
         }
 
         set {
-            NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: Keys.shopURIKey)
+            UserDefaults.standard.set(newValue, forKey: Keys.shopURIKey)
         }
     }
 
     func fetchScreenData() {
-        Alamofire.request(.GET, screenURLString, headers: ["Accept" : "application/json"]).responseJSON { [weak self] response in
+        SessionManager.default.request(screenURLString, method: .get, headers: ["Accept" : "text/plain"]).responseJSON { [weak self] response in
 
-            if let JSON = response.result.value as? [String : AnyObject], strongSelf = self {
+            if let JSON = response.result.value as? [String : AnyObject], let strongSelf = self {
                 strongSelf.showAD = (JSON["ad"] as? Bool) ?? false
                 strongSelf.shopURI = JSON["shop"] as? String
             }

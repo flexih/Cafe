@@ -11,7 +11,7 @@ import CoreLocation
 
 extension CLGeocoder {
     
-    private struct AssociatedKeys {
+    fileprivate struct AssociatedKeys {
         static var sharedKey = "cafe_sharedKey"
     }
 

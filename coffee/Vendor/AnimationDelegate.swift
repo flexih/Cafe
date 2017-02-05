@@ -5,10 +5,10 @@
 
 import QuartzCore
 
-class AnimationDelegate {
-    private let completion: () -> Void
+class AnimationDelegate: NSObject, CAAnimationDelegate {
+    fileprivate let completion: () -> Void
 
-    init(completion: () -> Void) {
+    init(completion: @escaping () -> Void) {
         self.completion = completion
     }
 

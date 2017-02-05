@@ -13,7 +13,7 @@ import SnapKit
 class MenuListViewController: UIViewController {
     
     lazy var tableView: UITableView = {
-        let v = UITableView(frame: CGRectZero, style: .Plain)
+        let v = UITableView(frame: CGRect.zero, style: .plain)
         return v
     }()
     
@@ -27,7 +27,7 @@ class MenuListViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.snp_makeConstraints { make in
+        tableView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view)
             make.top.bottom.equalTo(view)
         }
@@ -39,7 +39,7 @@ class MenuListViewController: UIViewController {
             Row(text: $0.name, selection: { [unowned self] indexPath in
                 if let action = self.selectedCity {
                     action(self.cityList.citys[indexPath.row].name)
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 }
             }, cellClass: CityCell.self)
         })]

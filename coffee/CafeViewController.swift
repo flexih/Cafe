@@ -14,7 +14,7 @@ import AlamofireImage
 class CafeViewController: UIViewController {
     
     lazy var tableView: UITableView = {
-        let v = UITableView(frame: CGRectZero, style: .Plain)
+        let v = UITableView(frame: CGRect.zero, style: .plain)
         return v
     }()
     
@@ -27,26 +27,26 @@ class CafeViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.snp_makeConstraints { make in
+        tableView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view)
             make.top.bottom.equalTo(view)
         }
         
         title = cafe.name
         
-        posterView.frame = CGRect(x: 0, y: -posterViewHeight, width: CGRectGetWidth(view.bounds), height: posterViewHeight)
-        posterView.af_setImageWithURL(cafe.posterURL, placeholderImage: nil, filter: ScaledToSizeFilter(size: posterView.bounds.size))
-        posterView.contentMode = .ScaleAspectFill
+        posterView.frame = CGRect(x: 0, y: -posterViewHeight, width: view.bounds.width, height: posterViewHeight)
+        posterView.af_setImage(withURL: cafe.posterURL, placeholderImage: nil, filter: ScaledToSizeFilter(size: posterView.bounds.size))
+        posterView.contentMode = .scaleAspectFill
         posterView.clipsToBounds = true
         tableView.addSubview(posterView)
-        tableView.contentInset = UIEdgeInsets(top: CGRectGetHeight(posterView.bounds), left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: posterView.bounds.height, left: 0, bottom: 0, right: 0)
         tableView.rowHeight = 70
         tableView.sectionHeaderHeight = 0
         tableView.sectionFooterHeight = 0
         
         var rows = [Row]()
         
-        if let phone = cafe.phones?.joinWithSeparator(", ") {
+        if let phone = cafe.phones?.joined(separator: ", ") {
             rows.append(Row(text: "电话", detailText: phone, selection: { [weak self] indexPath in
                 if let this = self {
                     this.alertDail(this.cafe.phones!)
@@ -74,7 +74,7 @@ class CafeViewController: UIViewController {
         tableView.removeObserver(self, forKeyPath: "contentOffset")
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "contentOffset" {
             let offset = tableView.contentOffset;
             var frame = posterView.frame;
@@ -90,7 +90,7 @@ class CafeViewController: UIViewController {
             posterView.frame = frame;
             
         } else {
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
     
@@ -119,48 +119,48 @@ class CafeViewController: UIViewController {
         blurView.backgroundColor = UIColor(white: 0, alpha: 0.4)
         
         label.numberOfLines = 0
-        label.lineBreakMode = .ByWordWrapping
-        label.font = UIFont.systemFontOfSize(15)
-        label.textColor = .whiteColor()
+        label.lineBreakMode = .byWordWrapping
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = .white
         label.text = self.cafe.oneword
-        let size = label.sizeThatFits(CGSize(width: CGRectGetWidth(self.view.bounds) - 40, height: CGFloat.max))
+        let size = label.sizeThatFits(CGSize(width: self.view.bounds.width - 40, height: CGFloat.greatestFiniteMagnitude))
         
         v.addSubview(blurView)
         blurView.addSubview(label)
         
-        blurView.snp_makeConstraints{ make in
+        blurView.snp.makeConstraints{ make in
             make.leading.trailing.equalTo(0)
             make.bottom.equalTo(0)
             make.height.equalTo(size.height + 20)
         }
         
-        label.bounds = CGRect(origin: CGPointZero, size: size)
-        label.center = CGPoint(x: CGRectGetMidX(label.bounds) + 20, y: CGRectGetMidY(label.bounds) + 10)
+        label.bounds = CGRect(origin: CGPoint.zero, size: size)
+        label.center = CGPoint(x: label.bounds.midX + 20, y: label.bounds.midY + 10)
         
         return v
     }()
 }
 
 extension CafeViewController {
-    func dail(phoneNumber: String) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "tel:" + phoneNumber)!)
+    func dail(_ phoneNumber: String) {
+        UIApplication.shared.openURL(URL(string: "tel:" + phoneNumber)!)
     }
     
-    func alertDail(phoneNumbers: [String]) {
-        let actions = phoneNumbers.map{UIAlertAction(title: $0, style:.Default) { [unowned self] action in
+    func alertDail(_ phoneNumbers: [String]) {
+        let actions = phoneNumbers.map{UIAlertAction(title: $0, style:.default) { [unowned self] action in
                 self.dail(action.title!)
             }
         }
         
-        let alertController = UIAlertController(title: "拨打电话", message: "", preferredStyle: actions.count > 1 ? .ActionSheet : .Alert)
+        let alertController = UIAlertController(title: "拨打电话", message: "", preferredStyle: actions.count > 1 ? .actionSheet : .alert)
         
         actions.forEach {
             alertController.addAction($0)
         }
         
-        alertController.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
 }

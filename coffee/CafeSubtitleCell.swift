@@ -9,19 +9,19 @@
 import Static
 import AlamofireImage
 
-class CafeSubtitleCell: UITableViewCell, CellType {
+class CafeSubtitleCell: UITableViewCell, Cell {
     
     static let imageFilter = ScaledToSizeWithRoundedCornersFilter(size: CGSize(width: 56, height: 56), radius: 28)
     static var placeholderImage = UIImage(named: "oval")
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
 
         separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         textLabel?.textColor = UIColor(hex: 0xFB8472)
         detailTextLabel?.textColor = UIColor(hex: 0x968F8B)
-        backgroundColor = .clearColor()
-        contentView.backgroundColor = .clearColor()
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -32,21 +32,21 @@ class CafeSubtitleCell: UITableViewCell, CellType {
         super.layoutSubviews()
         
         if var center = detailTextLabel?.center {
-            center.y = CGRectGetMaxY(textLabel!.frame) + CGRectGetHeight(detailTextLabel!.bounds) / 2 + 5
+            center.y = textLabel!.frame.maxY + detailTextLabel!.bounds.height / 2 + 5
             center.x = detailTextLabel!.center.x
             detailTextLabel!.center = center
         }
         
     }
     
-    func configure(row row: Row) {
+    func configure(row: Row) {
         textLabel?.text = row.text
         detailTextLabel?.text = row.detailText
         accessoryType = row.accessory.type
         accessoryView = row.accessory.view
         
         if let cafe = row.context?["cafe"] as? Cafe {
-            imageView?.af_setImageWithURL(cafe.posterURL, placeholderImage: self.dynamicType.placeholderImage, filter: self.dynamicType.imageFilter, imageTransition: .CrossDissolve(0.25), runImageTransitionIfCached: true)
+            imageView?.af_setImage(withURL: cafe.posterURL, placeholderImage: type(of: self).placeholderImage, filter: type(of: self).imageFilter, imageTransition: .crossDissolve(0.25), runImageTransitionIfCached: true)
         }
     }
 }

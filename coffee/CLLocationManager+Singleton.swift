@@ -11,7 +11,7 @@ import CoreLocation
 
 extension CLLocationManager {
     
-    private struct AssociatedKeys {
+    fileprivate struct AssociatedKeys {
         static var sharedKey = "cafe_sharedKey"
     }
 

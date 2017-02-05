@@ -12,15 +12,15 @@ extension MKMapView {
 
     var cafe_edgeInsets: UIEdgeInsets {
         get {
-            if let value = valueForKey("edgeInsets") as? NSValue {
-                return value.UIEdgeInsetsValue()
+            if let value = value(forKey: "edgeInsets") as? NSValue {
+                return value.uiEdgeInsetsValue
             }
 
-            return UIEdgeInsetsZero
+            return UIEdgeInsets.zero
         }
 
         set {
-            setValue(NSValue(UIEdgeInsets: newValue), forKey: "edgeInsets")
+            setValue(NSValue(uiEdgeInsets: newValue), forKey: "edgeInsets")
         }
     }
 }

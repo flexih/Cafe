@@ -10,7 +10,7 @@ import MapKit
 
 extension ViewController: MKMapViewDelegate {
     
-    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         guard !didUpdateUserLocation else {
             return
         }
@@ -22,35 +22,35 @@ extension ViewController: MKMapViewDelegate {
         locateUser()
     }
     
-    private struct Indentifier {
+    fileprivate struct Indentifier {
         static var annotationView = "annotationView"
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
         }
         
-        if let pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(Indentifier.annotationView) {
+        if let pinView = mapView.dequeueReusableAnnotationView(withIdentifier: Indentifier.annotationView) {
             pinView.annotation = annotation
             return pinView
         } else {
             let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Indentifier.annotationView)
             pinView.annotation = annotation
-            pinView.pinColor = .Green
+            pinView.pinColor = .green
             pinView.canShowCallout = true
-            pinView.animatesDrop = true
-            pinView.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pinView.animatesDrop = false
+            pinView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             return pinView
         }
         
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         navigationController?.pushViewController(CafeViewController(cafe: (view.annotation as! CafeAnnotation).cafe), animated: true)
     }
     
-    func addAnnotations(cafes: [Cafe]) {
+    func addAnnotations(_ cafes: [Cafe]) {
         removeAllAnnotations()
         
         mapView.addAnnotations(cafes.map{CafeAnnotation(cafe: $0)})

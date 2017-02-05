@@ -27,14 +27,14 @@ struct City {
         cafes = cafesArray
     }
 
-    func cafeWithName(name: String) -> Cafe? {
+    func cafeWithName(_ name: String) -> Cafe? {
         return cafes.filter{$0.name == name}.first
     }
 }
 
 struct CityList {
     
-    private struct Keys {
+    fileprivate struct Keys {
         static let selectedCityKey = "selectedCity"
     }
     
@@ -53,37 +53,31 @@ struct CityList {
     
     var selectedCity: String! {
         didSet {
-            NSUserDefaults.standardUserDefaults().setObject(selectedCity, forKey: Keys.selectedCityKey)
+            UserDefaults.standard.set(selectedCity, forKey: Keys.selectedCityKey)
         }
     }
     
-    func takenCity(name: String) -> String? {
+    func takenCity(_ name: String) -> String? {
         let city = citys.filter{name.hasPrefix($0.name)}.first
         return city?.name
     }
 
-    func sameCity(name: String) -> Bool {
-        let city = citys.filter{name.hasPrefix($0.name)}.first
-        if let cityName = city?.name {
-            return cityName == selectedCity
+    func sameCity(_ name: String, other: String) -> Bool {
+        if let name = takenCity(name), let other = takenCity(other) {
+            return name == other
         }
 
         return false
     }
 
-    func cityWithName(name: String) -> City? {
+    func cityWithName(_ name: String) -> City? {
         return (citys.filter{$0.name == name}).first
     }
-
-    init(citys: [City]) {
-        self.citys = citys
-        selectedCity = NSUserDefaults.standardUserDefaults().objectForKey(Keys.selectedCityKey).map{$0 as! String} ?? citys.first!.name
-    }
     
-    static func readData(jsonData: NSData) -> [City] {
+    static func readData(_ jsonData: Data) -> [City] {
         var citys = [City]()
         
-        if let jsonWrapper = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: []) {
+        if let jsonWrapper = try? JSONSerialization.jsonObject(with: jsonData, options: []) {
             if let json = jsonWrapper as? [[String: AnyObject]] {
                 for cityJson in json {
                     let city = City(dict: cityJson)
@@ -95,13 +89,38 @@ struct CityList {
         return citys
     }
 
-    static func storeData(jsonData: NSData?) {
-        
+    static func storeData(_ jsonData: Data?) {
+        try? jsonData?.write(to: cachedDataURL, options: [.atomic])
+    }
+
+    static var cachedDataURL: URL = {
+        let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return URL(string: "cafes.json", relativeTo: documentURL)!
+    } ()
+
+    init(jsonData: Data) {
+        citys = CityList.readData(jsonData)
+        selectedCity = UserDefaults.standard.object(forKey: Keys.selectedCityKey).map{$0 as! String} ?? citys.first!.name
     }
     
-    init() {
-        let jsonData = NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("Cafes", withExtension: "json")!)!
-        citys = CityList.readData(jsonData)
-        selectedCity = NSUserDefaults.standardUserDefaults().objectForKey(Keys.selectedCityKey).map{$0 as! String} ?? citys.first!.name
+    init?(URL: Foundation.URL) {
+
+        guard let jsonData = try? Data(contentsOf: URL) else {
+            return nil
+        }
+
+        self.init(jsonData: jsonData)
+    }
+
+    fileprivate init() {
+        citys = []
+    }
+
+    static func defaultList() -> CityList {
+        if let cityList = CityList(URL: cachedDataURL), !cityList.citys.isEmpty {
+            return cityList
+        }
+
+        return CityList(URL: Bundle.main.url(forResource: "cafes", withExtension: "json")!)!
     }
 }
